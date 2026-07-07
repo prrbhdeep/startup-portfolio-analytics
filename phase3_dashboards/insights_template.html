@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio Insights — Startup Portfolio Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+  :root { --ink:#0E1420; --panel:#151D2C; --line:#26324A; --text:#E8ECF4;
+          --muted:#8B96AC; --amber:#E8B44C; --teal:#3FB8AF; --coral:#E4604E; --slate:#5C7099; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--ink); color:var(--text); font-family:Inter,sans-serif; padding:48px 24px 80px; }
+  .wrap { max-width:1060px; margin:0 auto; }
+  .eyebrow { font:500 11px/1 'IBM Plex Mono',monospace; letter-spacing:.18em;
+             color:var(--amber); text-transform:uppercase; }
+  h1 { font:500 clamp(30px,4.5vw,44px)/1.15 Newsreader,serif; margin:14px 0 8px; }
+  .sub { color:var(--muted); font-size:15px; max-width:58ch; }
+  .sub a { color:var(--teal); text-decoration:none; border-bottom:1px solid #2c4a48; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:36px; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:20px 18px 10px; }
+  .panel h2 { font:500 11px/1 'IBM Plex Mono',monospace; letter-spacing:.16em;
+              text-transform:uppercase; color:var(--muted); margin:0 0 6px 6px; }
+  .panel .takeaway { font:400 13.5px/1.5 Inter; color:var(--text); margin:0 0 10px 6px;
+              padding-left:10px; border-left:2px solid var(--amber); }
+  .chart { width:100%; height:300px; }
+  .nav { margin-top:36px; font:500 12px 'IBM Plex Mono',monospace; }
+  .nav a { color:var(--teal); text-decoration:none; }
+  .foot { margin-top:16px; font:400 12px 'IBM Plex Mono',monospace; color:var(--muted); letter-spacing:.05em; }
+  @media (max-width:780px){ .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Annex C · Portfolio Insights</div>
+  <h1>Four questions a fund director would ask</h1>
+  <p class="sub">Concentration, cash cliffs, sector allocation, and capital efficiency —
+     analyses that don't appear on the standard health dashboards.</p>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>01 · Concentration risk</h2>
+      <p class="takeaway">The top 10 startups generate <b>46%</b> of portfolio revenue.
+         Losing two of them would hurt more than losing the bottom fifty.</p>
+      <div id="c1" class="chart"></div>
+    </div>
+    <div class="panel">
+      <h2>02 · The cash cliff</h2>
+      <p class="takeaway"><b>39 startups</b> currently have under 6 months of runway —
+         improved from 52, but still a third of the portfolio living quarter to quarter.</p>
+      <div id="c2" class="chart"></div>
+    </div>
+    <div class="panel">
+      <h2>03 · Sector risk–return</h2>
+      <p class="takeaway">EdTech delivers the best growth per unit of risk;
+         AI/ML carries the highest average risk score in the book.</p>
+      <div id="c3" class="chart"></div>
+    </div>
+    <div class="panel">
+      <h2>04 · Capital efficiency by stage</h2>
+      <p class="takeaway">Median monthly revenue generated per lakh of total funding raised —
+         how hard each stage makes its capital work.</p>
+      <div id="c4" class="chart"></div>
+    </div>
+  </div>
+
+  <div class="nav">→ <a href="index.html">index</a> · <a href="dashboard.html">health dashboard</a> · <a href="ml_model_report.html">risk model</a></div>
+  <div class="foot">PYTHON · PANDAS · SQL · ECHARTS — synthetic portfolio data, methodology in repo</div>
+</div>
+
+<script>
+const D = /*DATA*/;
+const AX = { axisLine:{lineStyle:{color:'#26324A'}}, splitLine:{lineStyle:{color:'#1B2436'}},
+             axisLabel:{color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:10} };
+const TIP = { backgroundColor:'#1B2436', borderColor:'#26324A',
+              textStyle:{color:'#E8ECF4', fontFamily:'IBM Plex Mono', fontSize:11} };
+const opts = { textStyle:{fontFamily:'Inter'}, animationDuration:700 };
+
+// 1 — Pareto concentration curve
+echarts.init(document.getElementById('c1')).setOption({...opts,
+  tooltip:{...TIP, trigger:'axis', formatter:p=>`top ${p[0].dataIndex+1} startups<br>${p[0].value}% of revenue`},
+  grid:{left:44,right:18,top:16,bottom:38},
+  xAxis:{...AX, type:'category', data:D.pareto.map((_,i)=>i+1), name:'startups (ranked by revenue)',
+    nameLocation:'middle', nameGap:26, nameTextStyle:{color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:10},
+    axisLabel:{...AX.axisLabel, interval:19}},
+  yAxis:{...AX, type:'value', max:100, axisLabel:{...AX.axisLabel, formatter:'{value}%'}},
+  series:[{type:'line', data:D.pareto, smooth:true, showSymbol:false,
+    lineStyle:{color:'#E8B44C', width:2.5}, areaStyle:{color:'rgba(232,180,76,.12)'},
+    markLine:{symbol:'none', lineStyle:{color:'#3A4A68', type:'dashed'}, label:{color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:10},
+      data:[{yAxis:50, label:{formatter:'half of all revenue'}}]},
+    markPoint:{symbol:'circle', symbolSize:8, itemStyle:{color:'#E4604E'},
+      label:{color:'#E4604E', fontFamily:'IBM Plex Mono', fontSize:10, position:'right', formatter:'top 10 = 46%'},
+      data:[{coord:[9, D.pareto[9]]}]}}]});
+
+// 2 — Cash cliff over time
+echarts.init(document.getElementById('c2')).setOption({...opts,
+  tooltip:{...TIP, trigger:'axis'},
+  legend:{textStyle:{color:'#8B96AC', fontSize:11}, top:0, icon:'rect', itemWidth:10, itemHeight:10},
+  grid:{left:38,right:18,top:34,bottom:30},
+  xAxis:{...AX, type:'category', data:D.months, axisLabel:{...AX.axisLabel, interval:3}},
+  yAxis:{...AX, type:'value', name:'startups', nameTextStyle:{color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:10}},
+  series:[
+    {name:'< 6 months runway', type:'line', data:D.danger, smooth:true, showSymbol:false,
+     lineStyle:{color:'#E8B44C', width:2.5}, areaStyle:{color:'rgba(232,180,76,.10)'}},
+    {name:'< 3 months (critical)', type:'line', data:D.critical, smooth:true, showSymbol:false,
+     lineStyle:{color:'#E4604E', width:2.5}, areaStyle:{color:'rgba(228,96,78,.12)'}}]});
+
+// 3 — Sector risk-return scatter
+echarts.init(document.getElementById('c3')).setOption({...opts,
+  tooltip:{...TIP, formatter:p=>`${p.data.name}<br>growth ${(p.value[0]*100).toFixed(1)}% · risk ${p.value[1].toFixed(2)}<br>${p.data.n} startups`},
+  grid:{left:44,right:18,top:16,bottom:38},
+  xAxis:{...AX, type:'value', name:'avg monthly growth', nameLocation:'middle', nameGap:26,
+    nameTextStyle:{color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:10},
+    axisLabel:{...AX.axisLabel, formatter:v=>(v*100).toFixed(0)+'%'}},
+  yAxis:{...AX, type:'value', name:'avg risk score', nameTextStyle:{color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:10}},
+  series:[{type:'scatter',
+    data:D.rr.map(r=>({name:r[0], value:[r[1], r[2]], n:r[4],
+      itemStyle:{color:r[2]>0.35?'#E4604E':r[2]>0.28?'#E8B44C':'#3FB8AF'}})),
+    symbolSize:(v,p)=>Math.min(26, Math.max(10, Math.sqrt(p.data.value ? D.rr.find(r=>r[0]===p.data.name)[3] : 100)*0.55)),
+    label:{show:true, position:'top', color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:9.5,
+      formatter:p=>p.data.name}}]});
+
+// 4 — Capital efficiency by stage
+echarts.init(document.getElementById('c4')).setOption({...opts,
+  tooltip:{...TIP, formatter:p=>`${p.name}<br>₹${p.value} monthly rev per ₹1L raised<br>${D.stages.counts[p.dataIndex]} startups`},
+  grid:{left:44,right:18,top:16,bottom:30},
+  xAxis:{...AX, type:'category', data:D.stages.labels},
+  yAxis:{...AX, type:'value', name:'rev / funding', nameTextStyle:{color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:10}},
+  series:[{type:'bar', data:D.stages.medians, barWidth:'46%',
+    itemStyle:{color:'#3FB8AF', borderRadius:[3,3,0,0]},
+    label:{show:true, position:'top', color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:10}}]});
+
+addEventListener('resize', ()=>document.querySelectorAll('.chart').forEach(el=>echarts.getInstanceByDom(el)?.resize()));
+</script>
+</body>
+</html>

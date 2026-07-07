@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio Health — Startup Portfolio Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+  :root { --ink:#0E1420; --panel:#151D2C; --line:#26324A; --text:#E8ECF4;
+          --muted:#8B96AC; --amber:#E8B44C; --teal:#3FB8AF; --coral:#E4604E; --slate:#5C7099; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--ink); color:var(--text); font-family:Inter,sans-serif; padding:48px 24px 80px; }
+  .wrap { max-width:1060px; margin:0 auto; }
+  .eyebrow { font:500 11px/1 'IBM Plex Mono',monospace; letter-spacing:.18em;
+             color:var(--amber); text-transform:uppercase; }
+  h1 { font:500 clamp(30px,4.5vw,44px)/1.15 Newsreader,serif; margin:14px 0 8px; }
+  .sub { color:var(--muted); font-size:15px; max-width:56ch; }
+  .sub a { color:var(--teal); text-decoration:none; border-bottom:1px solid #2c4a48; }
+  .ledger { display:grid; grid-template-columns:repeat(5,1fr);
+            border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:36px 0 40px; }
+  .ledger div { padding:18px 14px; border-left:1px solid var(--line); }
+  .ledger div:first-child { border-left:0; }
+  .ledger b { display:block; font:500 26px/1 'IBM Plex Mono',monospace;
+              font-variant-numeric:tabular-nums; margin-bottom:7px; }
+  .ledger span { font-size:11.5px; color:var(--muted); letter-spacing:.04em; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:20px 18px 10px; }
+  .panel.wide { grid-column:1/-1; }
+  .panel h2 { font:500 11px/1 'IBM Plex Mono',monospace; letter-spacing:.16em;
+              text-transform:uppercase; color:var(--muted); margin:0 0 4px 6px; }
+  .panel p { font-size:12.5px; color:var(--muted); margin:0 0 8px 6px; }
+  .chart { width:100%; height:320px; }
+  .chart.tall { height:380px; }
+  .foot { margin-top:44px; font:400 12px 'IBM Plex Mono',monospace; color:var(--muted); letter-spacing:.05em; }
+  .nav { margin-top:10px; font:500 12px 'IBM Plex Mono',monospace; }
+  .nav a { color:var(--teal); text-decoration:none; }
+  @media (max-width:780px){ .grid{grid-template-columns:1fr} .ledger{grid-template-columns:repeat(2,1fr)}
+    .ledger div{border-top:1px solid var(--line)} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Annex A · Portfolio Health</div>
+  <h1>Where is the portfolio making money?</h1>
+  <p class="sub">Growth, efficiency, and sector trends across 110 startups and 24 months of
+     self-reported KPIs. Companion to the <a href="ml_model_report.html">risk model report</a>.</p>
+
+  <div class="ledger">
+    <div><b style="color:var(--amber)">₹7,031L</b><span>portfolio revenue / mo</span></div>
+    <div><b style="color:var(--teal)">63<span style="font-size:15px;color:var(--muted)"> /110</span></b><span>burn-efficient startups</span></div>
+    <div><b>EdTech</b><span>top sector by revenue</span></div>
+    <div><b style="color:var(--coral)">11</b><span>flagged at-risk</span></div>
+    <div><b>24 mo</b><span>observation window</span></div>
+  </div>
+
+  <div class="grid">
+    <div class="panel wide">
+      <h2>Sector revenue trends</h2>
+      <p>Monthly revenue by sector, INR lakhs · click legend items to isolate sectors</p>
+      <div id="c1" class="chart tall"></div>
+    </div>
+    <div class="panel">
+      <h2>Company efficiency ladder</h2>
+      <p>Revenue-to-burn ratio, trailing 6 months · every startup, ranked · amber line = break-even</p>
+      <div id="c2" class="chart"></div>
+    </div>
+    <div class="panel">
+      <h2>Strategy quadrants</h2>
+      <p>Growth vs efficiency · bubble = revenue · ◆ = model-flagged · hover to identify</p>
+      <div id="c3" class="chart"></div>
+    </div>
+  </div>
+
+  <div class="nav">→ <a href="index.html">back to index</a> · <a href="ml_model_report.html">risk model report</a></div>
+  <div class="foot">PYTHON · PANDAS · SQL · ECHARTS — synthetic portfolio data, methodology in repo</div>
+</div>
+
+<script>
+const D = /*DATA*/;
+const AX = { axisLine:{lineStyle:{color:'#26324A'}}, splitLine:{lineStyle:{color:'#1B2436'}},
+             axisLabel:{color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:10} };
+const TIP = { backgroundColor:'#1B2436', borderColor:'#26324A',
+              textStyle:{color:'#E8ECF4', fontFamily:'IBM Plex Mono', fontSize:11} };
+const PAL = ['#E8B44C','#3FB8AF','#E4604E','#5C7099','#9C6ADE','#4C9BE8',
+             '#D98CB3','#7FBF6A','#C2874C','#6ADEC9'];
+const opts = { textStyle:{fontFamily:'Inter'}, animationDuration:700 };
+
+// 1 — sector stacked area
+echarts.init(document.getElementById('c1')).setOption({...opts, color:PAL,
+  tooltip:{...TIP, trigger:'axis', order:'valueDesc'},
+  legend:{textStyle:{color:'#8B96AC', fontSize:10.5}, top:0, icon:'rect', itemWidth:10, itemHeight:10},
+  grid:{left:48,right:18,top:44,bottom:30},
+  xAxis:{...AX, type:'category', data:D.months},
+  yAxis:{...AX, type:'value'},
+  series: D.sectors.map(sec=>({name:sec, type:'line', stack:'rev', areaStyle:{opacity:.55},
+    smooth:true, showSymbol:false, lineStyle:{width:1}, emphasis:{focus:'series'},
+    data:D.sector_series[sec]}))});
+
+// 2 — efficiency ladder
+echarts.init(document.getElementById('c2')).setOption({...opts,
+  tooltip:{...TIP, formatter:p=>`${D.eff_ids[p.dataIndex]}<br>ratio ${p.value[1].toFixed(2)}`},
+  grid:{left:44,right:16,top:16,bottom:30},
+  xAxis:{...AX, type:'value', name:'rank', nameLocation:'middle', nameGap:24,
+    nameTextStyle:{color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:10}},
+  yAxis:{...AX, type:'value', name:'rev / burn', nameTextStyle:{color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:10}},
+  series:[{type:'bar', data:D.eff_data, barWidth:'70%',
+    itemStyle:{color:p=>p.value[1]>=1?'#3FB8AF':'#E4604E', opacity:.9},
+    markLine:{symbol:'none', lineStyle:{color:'#E8B44C', type:'dashed'},
+      label:{color:'#E8B44C', fontFamily:'IBM Plex Mono', fontSize:10, formatter:'break-even'},
+      data:[{yAxis:1}]}}]});
+
+// 3 — strategy quadrants
+const qp = D.qpts.map(p=>({value:[p[1], p[2]], id:p[0], rev:p[3], risk:p[4], flag:p[5], sector:p[6]}));
+echarts.init(document.getElementById('c3')).setOption({...opts,
+  tooltip:{...TIP, formatter:p=>`${p.data.id} · ${p.data.sector}<br>eff ${p.value[0].toFixed(2)} · growth ${(p.value[1]*100).toFixed(1)}%<br>risk score ${p.data.risk.toFixed(2)}${p.data.flag?' · ⚑ flagged':''}`},
+  grid:{left:44,right:18,top:16,bottom:38},
+  xAxis:{...AX, type:'value', name:'revenue-to-burn', nameLocation:'middle', nameGap:26,
+    nameTextStyle:{color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:10}},
+  yAxis:{...AX, type:'value', name:'avg growth', nameTextStyle:{color:'#8B96AC', fontFamily:'IBM Plex Mono', fontSize:10},
+    axisLabel:{...AX.axisLabel, formatter:v=>(v*100).toFixed(0)+'%'}},
+  series:[{type:'scatter', data:qp,
+    symbol:(v,p)=>p.data.flag?'diamond':'circle',
+    symbolSize:(v,p)=>Math.min(22, Math.max(5, Math.sqrt(p.data.rev)*0.9)),
+    itemStyle:{ color:p=>{const t=Math.min(p.data.risk,1);
+        return t>0.5? '#E4604E' : t>0.3? '#E8B44C' : '#3FB8AF';},
+      opacity:.85, borderColor:'#0E1420', borderWidth:.5 },
+    markLine:{symbol:'none', lineStyle:{color:'#3A4A68', type:'dashed'}, label:{show:false},
+      data:[{xAxis:1},{yAxis:0}]},
+    markPoint:{symbol:'rect', symbolSize:.1, silent:true,
+      label:{show:true, color:'#5A6A88', fontFamily:'IBM Plex Mono', fontSize:9.5, fontWeight:500},
+      data:[
+        {coord:[2.6,.125], value:'STARS', label:{formatter:'STARS'}},
+        {coord:[.42,.125], value:'CASH-HUNGRY', label:{formatter:'CASH-HUNGRY\nGROWERS'}},
+        {coord:[2.6,-.05], value:'STEADY', label:{formatter:'STEADY\nEARNERS'}},
+        {coord:[.42,-.05], value:'ZOMBIES', label:{formatter:'ZOMBIES'}}]}}]});
+
+addEventListener('resize', ()=>document.querySelectorAll('.chart').forEach(el=>echarts.getInstanceByDom(el)?.resize()));
+</script>
+</body>
+</html>
