@@ -1,0 +1,111 @@
+startup_id,name,sector,stage,founded_year,team_size,total_funding_inr_lakhs
+S001,Startup_001,D2C,Seed,2019,8,145.9
+S002,Startup_002,EdTech,Pre-Seed,2022,37,79.9
+S003,Startup_003,CleanTech,Pre-Series A,2021,21,52.7
+S004,Startup_004,AgriTech,Pre-Series A,2019,2,113.1
+S005,Startup_005,D2C,Seed,2022,9,238.3
+S006,Startup_006,AI/ML,Pre-Series A,2024,17,54.0
+S007,Startup_007,HealthTech,Seed,2022,15,45.4
+S008,Startup_008,D2C,Seed,2024,13,60.9
+S009,Startup_009,CleanTech,Seed,2021,24,256.5
+S010,Startup_010,AgriTech,Pre-Seed,2024,16,444.9
+S011,Startup_011,EdTech,Pre-Seed,2019,29,134.1
+S012,Startup_012,CleanTech,Pre-Seed,2021,35,170.6
+S013,Startup_013,CleanTech,Seed,2019,3,45.0
+S014,Startup_014,HealthTech,Pre-Seed,2023,33,236.1
+S015,Startup_015,DeepTech,Seed,2020,24,165.2
+S016,Startup_016,AgriTech,Series A,2024,23,41.2
+S017,Startup_017,FinTech,Pre-Seed,2020,26,12.6
+S018,Startup_018,CleanTech,Seed,2020,23,23.5
+S019,Startup_019,DeepTech,Pre-Series A,2024,23,43.1
+S020,Startup_020,FinTech,Pre-Seed,2021,43,323.2
+S021,Startup_021,AgriTech,Pre-Seed,2023,7,496.8
+S022,Startup_022,SaaS,Pre-Seed,2019,16,55.5
+S023,Startup_023,AI/ML,Pre-Seed,2022,44,57.5
+S024,Startup_024,DeepTech,Series A,2019,38,120.0
+S025,Startup_025,Logistics,Pre-Series A,2022,34,91.2
+S026,Startup_026,SaaS,Seed,2019,9,250.6
+S027,Startup_027,AI/ML,Pre-Series A,2024,6,50.6
+S028,Startup_028,HealthTech,Pre-Series A,2023,40,255.7
+S029,Startup_029,D2C,Pre-Seed,2022,5,69.2
+S030,Startup_030,EdTech,Pre-Series A,2021,7,230.3
+S031,Startup_031,Logistics,Seed,2019,33,66.8
+S032,Startup_032,HealthTech,Pre-Series A,2019,31,45.9
+S033,Startup_033,AgriTech,Pre-Series A,2022,36,737.7
+S034,Startup_034,HealthTech,Pre-Seed,2021,41,290.5
+S035,Startup_035,D2C,Pre-Seed,2021,17,12.5
+S036,Startup_036,AgriTech,Pre-Seed,2024,14,55.1
+S037,Startup_037,Logistics,Seed,2024,43,338.8
+S038,Startup_038,D2C,Pre-Series A,2024,31,24.1
+S039,Startup_039,FinTech,Pre-Series A,2024,20,210.1
+S040,Startup_040,EdTech,Pre-Seed,2024,18,187.5
+S041,Startup_041,Logistics,Seed,2024,20,41.7
+S042,Startup_042,FinTech,Seed,2023,29,89.1
+S043,Startup_043,AI/ML,Pre-Seed,2021,27,9.0
+S044,Startup_044,Logistics,Pre-Seed,2024,38,631.1
+S045,Startup_045,AI/ML,Pre-Seed,2021,27,64.1
+S046,Startup_046,AgriTech,Series A,2021,24,217.9
+S047,Startup_047,FinTech,Pre-Seed,2020,10,176.8
+S048,Startup_048,EdTech,Seed,2023,13,400.9
+S049,Startup_049,D2C,Pre-Series A,2024,2,55.9
+S050,Startup_050,CleanTech,Seed,2019,2,112.6
+S051,Startup_051,HealthTech,Series A,2022,35,166.5
+S052,Startup_052,SaaS,Series A,2019,33,235.0
+S053,Startup_053,EdTech,Pre-Seed,2023,26,320.5
+S054,Startup_054,FinTech,Seed,2022,41,53.2
+S055,Startup_055,CleanTech,Pre-Seed,2023,2,43.4
+S056,Startup_056,EdTech,Pre-Seed,2021,17,401.9
+S057,Startup_057,FinTech,Pre-Seed,2022,40,9.6
+S058,Startup_058,DeepTech,Seed,2021,6,506.3
+S059,Startup_059,DeepTech,Seed,2019,23,64.6
+S060,Startup_060,AI/ML,Pre-Seed,2019,30,89.6
+S061,Startup_061,EdTech,Pre-Seed,2022,4,42.5
+S062,Startup_062,DeepTech,Series A,2022,13,85.4
+S063,Startup_063,FinTech,Pre-Seed,2024,27,364.4
+S064,Startup_064,AI/ML,Pre-Seed,2023,17,210.2
+S065,Startup_065,FinTech,Seed,2024,38,154.8
+S066,Startup_066,AI/ML,Series A,2023,23,99.3
+S067,Startup_067,EdTech,Pre-Seed,2024,30,18.4
+S068,Startup_068,CleanTech,Seed,2021,15,35.6
+S069,Startup_069,D2C,Pre-Series A,2022,29,61.7
+S070,Startup_070,Logistics,Pre-Seed,2019,6,148.9
+S071,Startup_071,CleanTech,Pre-Series A,2023,31,97.2
+S072,Startup_072,AgriTech,Seed,2023,6,265.6
+S073,Startup_073,FinTech,Seed,2019,13,151.6
+S074,Startup_074,AgriTech,Seed,2024,17,95.6
+S075,Startup_075,CleanTech,Seed,2023,27,1100.3
+S076,Startup_076,AI/ML,Pre-Seed,2021,27,140.7
+S077,Startup_077,Logistics,Pre-Series A,2022,22,56.0
+S078,Startup_078,Logistics,Pre-Seed,2019,40,696.4
+S079,Startup_079,SaaS,Pre-Seed,2022,37,337.1
+S080,Startup_080,Logistics,Pre-Seed,2023,34,663.6
+S081,Startup_081,D2C,Seed,2023,31,79.7
+S082,Startup_082,Logistics,Seed,2019,38,263.5
+S083,Startup_083,CleanTech,Pre-Seed,2021,24,18.2
+S084,Startup_084,SaaS,Seed,2020,11,213.2
+S085,Startup_085,CleanTech,Pre-Seed,2019,6,75.7
+S086,Startup_086,CleanTech,Seed,2020,37,20.3
+S087,Startup_087,HealthTech,Pre-Seed,2024,35,280.3
+S088,Startup_088,SaaS,Seed,2020,32,12.3
+S089,Startup_089,CleanTech,Seed,2021,11,11.0
+S090,Startup_090,HealthTech,Series A,2024,20,134.1
+S091,Startup_091,HealthTech,Pre-Seed,2020,33,168.8
+S092,Startup_092,SaaS,Pre-Seed,2024,2,261.8
+S093,Startup_093,AgriTech,Pre-Seed,2020,6,203.6
+S094,Startup_094,AI/ML,Series A,2021,5,456.8
+S095,Startup_095,D2C,Pre-Series A,2020,17,194.5
+S096,Startup_096,AI/ML,Pre-Seed,2020,25,77.8
+S097,Startup_097,Logistics,Seed,2020,17,83.0
+S098,Startup_098,D2C,Pre-Series A,2019,3,66.0
+S099,Startup_099,Logistics,Seed,2019,29,124.6
+S100,Startup_100,CleanTech,Seed,2019,33,26.9
+S101,Startup_101,FinTech,Pre-Seed,2021,28,131.0
+S102,Startup_102,SaaS,Pre-Seed,2024,21,81.9
+S103,Startup_103,D2C,Pre-Series A,2023,25,121.9
+S104,Startup_104,D2C,Series A,2020,13,122.3
+S105,Startup_105,CleanTech,Seed,2020,36,6.1
+S106,Startup_106,AgriTech,Pre-Seed,2021,34,33.4
+S107,Startup_107,HealthTech,Pre-Seed,2020,34,79.9
+S108,Startup_108,CleanTech,Pre-Series A,2019,44,84.7
+S109,Startup_109,DeepTech,Pre-Series A,2023,38,119.7
+S110,Startup_110,HealthTech,Pre-Series A,2022,13,125.5
