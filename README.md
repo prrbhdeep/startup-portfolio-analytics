@@ -31,9 +31,12 @@ each in its own folder.
 
 **Run:** `cd phase2_risk_model && python risk_model.py`
 
-## Phase 3 — Dashboards 🚧
+## Phase 3 — Dashboards ✅
 **Goal:** Interactive dashboards tracking ROI, scalability, and sector trends.
-- Plotly dashboard (Python) → Tableau Public recreation
+- Live site: https://prrbhdeep.github.io/startup-portfolio-analytics/
+- Portfolio health: sector trends, efficiency ladder, strategy quadrants
+- Fund-level insights: concentration risk (top 10 startups = 46% of revenue), cash-cliff tracking, sector risk-return, capital efficiency by stage
+- Tableau versions: https://public.tableau.com/app/profile/prabhdeep.sohal/vizzes
 
 ## Key Design Decision
 The first data version produced a perfect AUC of 1.0 — a red flag that the synthetic
@@ -42,4 +45,6 @@ overlap to mirror real self-reported startup data, then re-evaluated. Realistic
 data → realistic (and defensible) metrics.
 
 ## Stack
-Python (pandas, scikit-learn) · SQL (SQLite) · Plotly · Tableau
+**Data & ML:** Python (pandas, NumPy, scikit-learn) · SQL (SQLite)
+**Visualization:** ECharts · Plotly · Tableau Public
+**Site:** HTML/CSS/JavaScript · GitHub Pages

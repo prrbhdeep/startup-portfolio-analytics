@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Startup Portfolio Analytics — Prabhdeep Kaur Sohal</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#0E1420; --panel:#151D2C; --line:#26324A; --text:#E8ECF4;
+          --muted:#8B96AC; --amber:#E8B44C; --teal:#3FB8AF; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--ink); color:var(--text); font-family:Inter,sans-serif;
+         min-height:100vh; display:grid; place-items:center; padding:48px 24px; }
+  .wrap { max-width:640px; }
+  .eyebrow { font:500 11px/1 'IBM Plex Mono',monospace; letter-spacing:.18em;
+             color:var(--amber); text-transform:uppercase; }
+  h1 { font:500 clamp(32px,5vw,46px)/1.12 Newsreader,serif; margin:14px 0 10px; }
+  .sub { color:var(--muted); font-size:15px; line-height:1.6; margin-bottom:36px; }
+  .sub a { color:var(--teal); text-decoration:none; border-bottom:1px solid #2c4a48; }
+  a.card { display:block; background:var(--panel); border:1px solid var(--line);
+           border-radius:10px; padding:20px 22px; margin:14px 0;
+           text-decoration:none; color:var(--text); transition:border-color .15s, transform .15s; }
+  a.card:hover { border-color:var(--amber); transform:translateY(-1px); }
+  a.card b { font:500 15px 'IBM Plex Mono',monospace; letter-spacing:.02em; color:var(--amber); }
+  a.card p { color:var(--muted); font-size:13.5px; margin-top:6px; line-height:1.5; }
+  .foot { margin-top:40px; font:400 11.5px 'IBM Plex Mono',monospace;
+          color:var(--muted); letter-spacing:.06em; }
+  @media (prefers-reduced-motion:reduce){ a.card{transition:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Portfolio Analytics · 110 Startups · 24 Months</div>
+  <h1>Which startups will fail next quarter?</h1>
+  <p class="sub">A data warehouse, ML risk model, and decision dashboards for a simulated
+     incubator portfolio — built end to end in Python and SQL by
+     <a href="https://github.com/prrbhdeep">Prabhdeep Kaur Sohal</a>.
+     Code and methodology in the <a href="https://github.com/prrbhdeep/startup-portfolio-analytics">GitHub repo</a>.</p>
+
+  <a class="card" href="ml_model_report.html">
+    <b>01 — RISK MODEL REPORT</b>
+    <p>Logistic regression + isolation forest. Score separation, risk drivers,
+       every startup scored, flag audit. ROC–AUC 0.957.</p>
+  </a>
+  <a class="card" href="dashboard.html">
+    <b>02 — PORTFOLIO HEALTH DASHBOARD</b>
+    <p>Sector revenue trends, burn efficiency, scalability map, and risk
+       distribution across the full portfolio.</p>
+  </a>
+
+  <a class="card" href="insights.html">
+    <b>03 — PORTFOLIO INSIGHTS</b>
+    <p>Concentration risk, cash-cliff tracking, sector risk–return, and
+       capital efficiency by stage — fund-director questions answered.</p>
+  </a>
+  <a class="card" href="https://public.tableau.com/app/profile/prabhdeep.sohal/vizzes">
+    <b>04 — TABLEAU DASHBOARDS ↗</b>
+    <p>Interactive Tableau Public builds: quadrant map, efficiency ladder,
+       and sector trends.</p>
+  </a>
+
+  <div class="foot">PYTHON · PANDAS · SCIKIT-LEARN · SQL · ECHARTS · PLOTLY</div>
+</div>
+</body>
+</html>
